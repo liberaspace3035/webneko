@@ -1,0 +1,11 @@
+{
+  "name": "webneko",
+  "version": "1.0.0",
+  "description": "採用特化SNS運用サイト",
+  "scripts": {
+    "start": "npx serve -s . -l $PORT"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
