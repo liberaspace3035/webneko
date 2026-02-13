@@ -77,7 +77,7 @@ ul {
   background: $color-accent;
   color: $color-white !important;
   font-weight: 700;
-  font-size: 0.9375rem;
+  font-size: 20px;
   border-radius: 999px;
   box-shadow: $shadow-sm;
   transition: background 0.2s, box-shadow 0.2s;
@@ -93,7 +93,7 @@ ul {
     position: absolute;
     right: 20px;
     top: 50%;
-    transform: translateY(-50%) scaleX(0.7) scaleY(1.5);
+    transform: translateY(-50%) scaleX(0.9) scaleY(1.5);
     transform-origin: center;
     font-size: 1rem;
     line-height: 1;
@@ -279,6 +279,11 @@ ul {
   line-height: 1.2;
   text-align: center;
   white-space: nowrap;
+
+  &-accent {
+    -webkit-text-stroke: 2px $color-white;
+    paint-order: stroke fill;
+  }
 }
 
 // 3行目: 3つの円（左・中央・右でガイドに合わせて space-between）
@@ -317,7 +322,7 @@ ul {
 
 .hero__feature-main {
   display: block;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
   line-height: 1.3;
   color: $color-feature-highlight;
@@ -351,6 +356,7 @@ ul {
   bottom: 15%;
   background: $color-white;
   font-size: 0.8125rem;
+  font-weight: 700;
   color: $color-text-light;
   line-height: 1;
   box-shadow: $shadow-md;
@@ -736,7 +742,7 @@ $nayami-stat-gold: #d4af37;
 .nayami__item {
   position: relative;
   height: 54.4px;
-  padding: 14px 16px 20px;
+  padding: 14px 16px 14px;
   background: $nayami-bubble-bg;
   border-radius: $radius;
   font-size: 16px;
@@ -1045,6 +1051,10 @@ $nayami-stat-gold: #d4af37;
   object-fit: contain;
 }
 
+.nayami-card:nth-child(1) .nayami-card__img {
+  max-height: 140px;
+}
+
 .nayami-solution__close {
   margin: 0;
   text-align: center;
@@ -1187,6 +1197,11 @@ $cases-bg-accent: #E8F0FA;
   &--left {
     text-align: left;
     margin-left: 31px;
+  }
+
+  &--left-lil {
+    text-align: left;
+    margin-left: 10px;
   }
 }
 
@@ -1378,7 +1393,7 @@ $cases-bg-accent: #E8F0FA;
 .recruit-slider__arrow-icon {
   line-height: 1;
   display: inline-block;
-  transform: scaleX(0.7) scaleY(1.5);
+  transform: scaleX(1) scaleY(1.5);
   transform-origin: center;
 
   @media (min-width: 769px) {
@@ -1584,12 +1599,15 @@ $cases-bg-accent: #E8F0FA;
   }
 }
 
-// 採用事例セクション内 CTAブロック（背景は .nayami-solution と同様）
+// 採用事例セクション内 CTAブロック
 .cases-cta {
   position: relative;
   margin-top: 32px;
   margin-bottom: 24px;
-  background: transparent linear-gradient(113deg, #2B6CE6 0%, #2654B6 46%, #244CA9 100%) 0% 0% no-repeat padding-box;
+  background-image: url(../images2/22880389.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 30px;
   overflow: hidden;
 
@@ -1625,6 +1643,7 @@ $cases-bg-accent: #E8F0FA;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  padding: 0 10px;
 }
 
 .cases-cta__figure {
@@ -1645,11 +1664,12 @@ $cases-bg-accent: #E8F0FA;
 
 .cases-cta__headline-line1,
 .cases-cta__headline-line2 {
-  margin: 0;
+  margin: 15px 0 0 0;
   font-size: 20px;
   font-weight: 700;
   color: $color-white;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .cases-cta__headline-line2 {
@@ -1885,7 +1905,6 @@ $reason-industry-bg: #f5f5f6;
 
 .reason-card__industry {
   background: $color-white;
-  border: 1px solid #e5e7eb;
   padding: 16px 12px;
   display: flex;
   flex-direction: row;
@@ -2109,17 +2128,17 @@ $reason-industry-bg: #f5f5f6;
   }
 
   .reason-card__industries {
-    grid-template-columns: repeat(2, 0fr);
+    grid-template-columns: repeat(3, 0fr);
     gap: 12px;
     justify-content: center;
   }
 
   .reason-card__industry {
     width: 100%;
-    max-width: 170px;
+    max-width: 115px;
     height: auto;
     min-height: 48px;
-    padding: 10px 48px;
+    padding: 10px 40px;
     gap: 8px;
     box-sizing: border-box;
     margin: 0 auto;
@@ -2211,8 +2230,8 @@ $reason-industry-bg: #f5f5f6;
   }
 
   .flow__info-man {
-    width: 100px !important;
-    height: 100px !important;
+    width: 120px !important;
+    height: 120px !important;
   }
 
   .video__inner {
@@ -2459,10 +2478,11 @@ $flow-info-bg: #EEF3F8;
 .flow__info-line1,
 .flow__info-line2 {
   margin: 0;
-  font-size: 1.125rem;
+  font-size: 20px;
   font-weight: 700;
   color: #0550B5;
   line-height: 1.4;
+  white-space: nowrap;
 
   &:last-child {
     margin-bottom: 0;
@@ -2476,6 +2496,10 @@ $flow-info-bg: #EEF3F8;
   line-height: 1.6;
   font-weight: bold;
   font-size: 20px;
+
+  @media (min-width: 769px) {
+    font-size: 24px;
+  }
 }
 
 // ========================================
@@ -2672,7 +2696,7 @@ $faq-question-bg: #2A60B3;
 
   &[aria-expanded="true"] {
     .faq__arrow {
-      transform: scaleX(1.5) scaleY(0.5) rotate(-90deg);
+      transform: scaleX(1.5) scaleY(0.7) rotate(-90deg);
     }
   }
 }
@@ -2699,7 +2723,7 @@ $faq-question-bg: #2A60B3;
   flex-shrink: 0;
   line-height: 1;
   display: inline-block;
-  transform: scaleX(1.5) scaleY(0.5) rotate(90deg);
+  transform: scaleX(1.5) scaleY(0.7) rotate(90deg);
   transform-origin: center;
 }
 
@@ -2749,12 +2773,12 @@ $cta-form-submit-bg: $color-accent;
 }
 
 .cta-form__header-line1 {
-  font-size: 20px;
+  font-size: 24px;
   margin-bottom: 4px;
 }
 
 .cta-form__header-line2 {
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .cta-form__body {
@@ -2887,7 +2911,7 @@ $cta-form-submit-bg: $color-accent;
   position: absolute;
   right: 20px;
   top: 50%;
-  transform: translateY(-50%) scaleX(0.7) scaleY(1.5);
+  transform: translateY(-50%) scaleX(0.9) scaleY(1.5);
   transform-origin: center;
   font-size: 1.25rem;
   font-weight: 400;
@@ -3181,10 +3205,6 @@ $sns-bg: #1a2d5e;
     margin-left: 0;
   }
 
-  .hero__benefit-tail {
-    display: none;
-  }
-
   .hero__benefit-highlight {
     font-size: 1rem;
   }
@@ -3299,13 +3319,12 @@ $sns-bg: #1a2d5e;
   }
 
   .cases-cta {
-    background: transparent linear-gradient(164deg, #2B6CE6 0%, #2654B6 46%, #244CA9 100%) 0% 0% no-repeat padding-box;
     max-width: 560px;
     margin-top: 50px;
   }
 
   .nayami-solution__lead {
-    margin-bottom: 20px;
+    margin-bottom: -10px;
   }
 
   .nayami-solution__lead-text {
@@ -3371,7 +3390,6 @@ $sns-bg: #1a2d5e;
   }
 
   .cases-cta__man {
-    width: 64px;
   }
 
   .cases-cta__headline-line1,

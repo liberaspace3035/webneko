@@ -37,7 +37,7 @@
             <p class="hero__benefit-text">採用活動を丸ごと任せられる!</p>
           </div>
         </div>
-        <h2 class="hero__headline">採用特化SNS運用</h2>
+        <h2 class="hero__headline"><span class="hero__headline-accent">採用</span>特化SNS運用</h2>
         <ul class="hero__features">
           <li class="hero__feature"><span class="hero__feature-label">採用特化の</span><span class="hero__feature-main">SNS運用</span></li>
           <li class="hero__feature"><span class="hero__feature-label">戦略・広告運用等</span><span class="hero__feature-main">全て対応</span></li>
@@ -262,7 +262,7 @@
                   <span class="cases__intro-label">cases</span>
                   <span class="cases__num">03</span>
                 </div>
-                <h3 class="cases__subtitle">解体業・作業スタッフ募集</h3>
+                <h3 class="cases__subtitle cases__subtitle--left-lil">解体業・作業スタッフ募集</h3>
               </div>
               <div class="recruit-slider__frame">
                 <img src="images2/achievements03.webp" alt="採用事例：解体業インタビュー" class="recruit-slider__img" width="320" height="560">
@@ -293,7 +293,7 @@
                   <span class="cases__intro-label">cases</span>
                   <span class="cases__num">04</span>
                 </div>
-                <h3 class="cases__subtitle">販売・コールセンター募集</h3>
+                <h3 class="cases__subtitle cases__subtitle--left-lil">販売・コールセンター募集</h3>
               </div>
               <div class="recruit-slider__frame">
                 <img src="images2/achievements04.webp" alt="採用事例：販売・コールセンター" class="recruit-slider__img" width="320" height="560">
@@ -610,7 +610,6 @@
 
         <!-- STEP 4 -->
         <div class="flow-step">
-          <div class="flow-step__connector"></div>
           <div class="flow-step__header">STEP 4</div>
           <div class="flow-step__body">
             <img src="images2/step4.webp" alt="" class="flow-step__icon" width="48" height="48">
@@ -624,7 +623,7 @@
           <div class="flow-step__header">STEP 5</div>
           <div class="flow-step__body">
             <div class="flow-step__icons">
-              <img src="images2/step5-1.webp" alt="" class="flow-step__icon" width="48" height="48">
+              <img src="images2/step5.webp" alt="" class="flow-step__icon" width="48" height="48">
               <img src="images2/step5-2.webp" alt="" class="flow-step__icon" width="48" height="48">
             </div>
             <p class="flow-step__text">初期構築・撮影</p>
@@ -929,6 +928,24 @@
       dots.forEach(function (d, i) {
         d.addEventListener('click', function (e) { e.preventDefault(); goTo(i); });
       });
+
+      // スワイプ操作
+      var trackWrapper = body.querySelector('.cases-slider__track-wrapper');
+      if (trackWrapper) {
+        var touchStartX = 0;
+        var touchEndX = 0;
+        var minSwipeDist = 50;
+        trackWrapper.addEventListener('touchstart', function (e) {
+          touchStartX = e.changedTouches ? e.changedTouches[0].screenX : e.screenX;
+        }, { passive: true });
+        trackWrapper.addEventListener('touchend', function (e) {
+          touchEndX = e.changedTouches ? e.changedTouches[0].screenX : e.screenX;
+          var diff = touchStartX - touchEndX;
+          if (diff > minSwipeDist) goNext();
+          else if (diff < -minSwipeDist) goPrev();
+        }, { passive: true });
+      }
+
       window.addEventListener('resize', function () { apply(true); });
     }
     if (document.readyState === 'loading') {
