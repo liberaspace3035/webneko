@@ -1015,8 +1015,8 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      // ここにフォーム送信処理を追加
-      alert('お問い合わせありがとうございます。送信機能は実装中です。');
+      // フォーム送信処理（バックエンド連携時はここで送信後、レスポンス成功時に遷移）
+      window.location.href = 'thanks.html';
     });
   })();
 
