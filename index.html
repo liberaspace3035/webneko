@@ -739,7 +739,8 @@
         <h2 class="cta-form__title">無料採用戦略診断はこちら</h2>
         <p class="cta-form__required"><span class="cta-form__asterisk">*</span>は必須項目です</p>
 
-        <form class="cta-form__form" id="contactForm">
+        <!-- PHP環境: send.php が使われます。Railway等でPHPが動かない場合は data-fallback-formspree-id に Formspree のフォームIDを入れると自動で Formspree に送信します -->
+        <form class="cta-form__form" id="contactForm" action="send.php" method="post" data-fallback-formspree-id="">
           <div class="cta-form__field">
             <label for="company" class="cta-form__label">
               会社名 <span class="cta-form__asterisk">*</span>
@@ -1008,15 +1009,79 @@
     });
   })();
 
-  // フォーム送信処理
+  // フォーム送信処理（send.php 優先 → 失敗時は Formspree にフォールバック）
   (function () {
     var form = document.getElementById('contactForm');
     if (!form) return;
 
+    function resetBtn(btn) {
+      if (btn) { btn.disabled = false; btn.innerHTML = '送信する<span class="cta-form__submit-arrow">&gt;</span>'; }
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      // フォーム送信処理（バックエンド連携時はここで送信後、レスポンス成功時に遷移）
-      window.location.href = '/thanks';
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = '送信中…';
+      }
+      var formData = new FormData(form);
+      var primaryUrl = form.getAttribute('action') || 'send.php';
+      var fallbackId = (form.getAttribute('data-fallback-formspree-id') || '').trim();
+
+      function tryFormspree() {
+        if (!fallbackId || fallbackId === 'YOUR_FORM_ID') {
+          alert('送信に失敗しました。しばらくしてから再度お試しください。');
+          resetBtn(btn);
+          return;
+        }
+        fetch('https://formspree.io/f/' + fallbackId, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        })
+          .then(function (res) {
+            if (res.ok) {
+              window.location.href = 'thanks.html';
+            } else {
+              return res.json().then(function (data) {
+                var msg = (data.errors && data.errors[0]) ? data.errors[0].message : '送信に失敗しました。';
+                alert(msg);
+                resetBtn(btn);
+              });
+            }
+          })
+          .catch(function () {
+            alert('送信に失敗しました。しばらくしてから再度お試しください。');
+            resetBtn(btn);
+          });
+      }
+
+      fetch(primaryUrl, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      })
+        .then(function (res) {
+          return res.text().then(function (text) {
+            try {
+              var data = JSON.parse(text);
+              if (data && data.ok) {
+                window.location.href = 'thanks.html';
+                return;
+              }
+              if (data && data.message) {
+                alert(data.message);
+                resetBtn(btn);
+                return;
+              }
+            } catch (err) { /* 非JSON = send.php が動いていない */ }
+            tryFormspree();
+          });
+        })
+        .catch(function () {
+          tryFormspree();
+        });
     });
   })();
 
