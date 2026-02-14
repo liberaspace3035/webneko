@@ -287,7 +287,7 @@
               </div>
             </div>
             <!-- スライド04 -->
-            <div class="cases-slide">
+            <div class="cases-slide cases-slide--04">
               <div class="cases__intro">
                 <div class="cases__intro-left">
                   <span class="cases__intro-label">cases</span>
@@ -892,6 +892,7 @@
         }
       }
       function onTransitionEnd() {
+        clearTimeout(animTimeout);
         isAnimating = false;
         if (index < cloneCount) {
           index = cloneCount + total - 1;
@@ -902,17 +903,22 @@
         }
       }
       track.addEventListener('transitionend', onTransitionEnd);
+      var animTimeout = null;
       function goNext() {
         if (isAnimating) return;
         isAnimating = true;
         index++;
         apply();
+        clearTimeout(animTimeout);
+        animTimeout = setTimeout(function () { isAnimating = false; }, 500);
       }
       function goPrev() {
         if (isAnimating) return;
         isAnimating = true;
         index--;
         apply();
+        clearTimeout(animTimeout);
+        animTimeout = setTimeout(function () { isAnimating = false; }, 500);
       }
       function goTo(i) {
         if (isAnimating) return;
@@ -933,16 +939,30 @@
       var trackWrapper = body.querySelector('.cases-slider__track-wrapper');
       if (trackWrapper) {
         var touchStartX = 0;
-        var touchEndX = 0;
+        var touchStartY = 0;
         var minSwipeDist = 50;
+        var maxSwipeVert = 80;
         trackWrapper.addEventListener('touchstart', function (e) {
-          touchStartX = e.changedTouches ? e.changedTouches[0].screenX : e.screenX;
+          var t = e.touches && e.touches[0];
+          if (t) {
+            touchStartX = t.screenX;
+            touchStartY = t.screenY;
+          }
         }, { passive: true });
         trackWrapper.addEventListener('touchend', function (e) {
-          touchEndX = e.changedTouches ? e.changedTouches[0].screenX : e.screenX;
-          var diff = touchStartX - touchEndX;
-          if (diff > minSwipeDist) goNext();
-          else if (diff < -minSwipeDist) goPrev();
+          var t = e.changedTouches && e.changedTouches[0];
+          if (!t) return;
+          var endX = t.screenX;
+          var endY = t.screenY;
+          var diffX = touchStartX - endX;
+          var diffY = Math.abs(touchStartY - endY);
+          if (diffY > maxSwipeVert) return;
+          if (diffX > minSwipeDist) goNext();
+          else if (diffX < -minSwipeDist) goPrev();
+        }, { passive: true });
+        trackWrapper.addEventListener('touchcancel', function () {
+          touchStartX = 0;
+          touchStartY = 0;
         }, { passive: true });
       }
 

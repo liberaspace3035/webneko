@@ -360,12 +360,12 @@ ul {
   color: $color-text-light;
   line-height: 1;
   box-shadow: $shadow-md;
-  max-width: 115px;
-  height: 28px;
+  max-width: 140px;
+  height: 31px;
   text-align: center;
   z-index: 1;
   border-radius: 4px;
-  font-size: 9px;
+  font-size: 11px;
 
   &--left {
     left: -8%;
@@ -617,6 +617,13 @@ $nayami-stat-gold: #d4af37;
   width: 232px;
   height: 61px;
   object-fit: contain;
+
+  &[src*='c04.webp'] {
+    @media (min-width: 769px) {
+      width: 260px;
+      height: auto;
+    }
+  }
 }
 
 @keyframes nayami-logos-flow {
@@ -1519,7 +1526,9 @@ $cases-bg-accent: #E8F0FA;
   border-radius: 3px;
   margin: 0 auto;
   text-align: center;
-  width: 350px;
+  max-width: 350px;
+  width: 100%;
+  box-sizing: border-box;
   height: 91px;
 }
 
@@ -1538,15 +1547,20 @@ $cases-bg-accent: #E8F0FA;
 .cases__kpi-row {
   display: flex;
   justify-content: center;
-  gap: 32px;
-  flex-wrap: wrap;
+  gap: 16px 32px;
   margin-top: -10px;
+
+  .cases-slide--04 & {
+    gap: 0;
+  }
 }
 
 .cases__kpi-item {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
+  min-width: 120px;
 }
 
 .cases__kpi-tag {
@@ -1557,6 +1571,7 @@ $cases-bg-accent: #E8F0FA;
   font-size: 14px;
   font-weight: 700;
   border-radius: 6px;
+  white-space: nowrap;
 }
 
 .cases__kpi-value {
@@ -1604,6 +1619,7 @@ $cases-bg-accent: #E8F0FA;
   position: relative;
   margin-top: 32px;
   margin-bottom: 24px;
+  background-color: #0550B5;
   background-image: url(../images2/22880389.png);
   background-size: cover;
   background-position: center;
@@ -2280,12 +2296,12 @@ $reason-industry-bg: #f5f5f6;
 
   .hero__caption--left {
     bottom: 21% !important;
-    left: -2% !important;
+    left: -10% !important;
   }
 
   .hero__caption--right {
     bottom: 21% !important;
-    right: -4% !important;
+    right: -17% !important;
   }
 
   .nayami-solution__logo {
